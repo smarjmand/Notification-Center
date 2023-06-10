@@ -1,0 +1,7 @@
+POST http://localhost/simple-template
+Content-Type: application/json
+
+{
+  "title": "birthday",
+  "note": "Happy birthday to you"
+}
