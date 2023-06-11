@@ -1,23 +1,21 @@
 //#region import
 import { ControllerOnPostCreateSimpleTemplate } from "./post-createSimpleTemplate";
-import {ControllerOnGetAllItemsSimpleTemplate} from "./get-allItemsSimpleTemplate";
-import {ControllerOnPermanentDeleteSimpleTemplate} from "./delete-permanentDeleteSimpleTemplate";
-import {ControllerOnUpdateSimpleTemplate} from "./post-updateSimpleTemplate";
-import {ControllerOnGetItemsByLanguageSimpleTemplate} from "./get-allItemsByTypeSimpleTemplate";
-import {ControllerOnSoftDeleteSimpleTemplate} from "./delete-softDeleteSimpleTemplate";
-import {ControllerOnGetSingleItemSimpleTemplate} from "./get-singleItemSimpleTemplate";
+import {ControllerOnGetSimpleTemplates} from "./get-simpleTemplates";
+import {ControllerOnEditSimpleTemplate} from "./put-editSimpleTemplate";
+import {ControllerOnGetSimpleTemplateByLanguage} from "./get-simpleTemplateByLanguage";
+import {ControllerOnDeleteSimpleTemplate} from "./delete-SimpleTemplate";
+import {ControllerOnGetSimpleTemplate} from "./get-SimpleTemplate";
 
 //#endregion
 
 function templateRoutes(fastify: any, options: any, done: any) {
-	// type : ['en', 'fa'] :
-	fastify.post("/simple-template/create", {}, ControllerOnPostCreateSimpleTemplate);
-	fastify.get("/simple-template/single-item/:id", {}, ControllerOnGetSingleItemSimpleTemplate)
-	fastify.get('/simple-template/all-items', {}, ControllerOnGetAllItemsSimpleTemplate);
-	fastify.get('/simple-template/by-type', {}, ControllerOnGetItemsByLanguageSimpleTemplate);
-	fastify.delete('/permanent-delete/:id', {}, ControllerOnPermanentDeleteSimpleTemplate);
-	fastify.delete('/simpleTemplate/:id', {}, ControllerOnSoftDeleteSimpleTemplate)
-	fastify.put('/simple-template/update/:id', {}, ControllerOnUpdateSimpleTemplate)
+	// types : ['en', 'fa'] :
+	fastify.post("/simpleTemplate/:?", {}, ControllerOnPostCreateSimpleTemplate);
+	fastify.get("/simpleTemplate/:id", {}, ControllerOnGetSimpleTemplate)
+	fastify.get('/simpleTemplates/', {}, ControllerOnGetSimpleTemplates);
+	fastify.get('/simpleTemplate/searchByType/:?', {}, ControllerOnGetSimpleTemplateByLanguage);
+	fastify.delete('/simpleTemplate/:id/:?', {}, ControllerOnDeleteSimpleTemplate)
+	fastify.put('/simpleTemplate/:id/:?', {}, ControllerOnEditSimpleTemplate)
 	done();
 }
 export { templateRoutes as templateRoute };

@@ -1,8 +1,9 @@
 import simpleTemplate from "../../models/databaseModels/SimpleTemplate";
 import mongoose from "mongoose";
 import {IResultOperation} from "../../models/Interfaces/IResultOperations";
+import {logger} from "../../utils/global/logger";
 
-const softDeleteSimpleTemplateController = async (request:any, reply:any, done:any) => {
+const deleteSimpleTemplateController = async (request:any, reply:any, done:any) => {
     const {id} = request.params
     try{
         const item = await simpleTemplate.findById(id).updateOne({isDeleted:true})
@@ -12,6 +13,7 @@ const softDeleteSimpleTemplateController = async (request:any, reply:any, done:a
             message:'Item Deleted'
         } as IResultOperation)
     } catch (error:any) {
+        logger("deleteSimpleTemplateController", 404, `there is an error : ${error.message}`, 8)
         reply.code(404).send({
             isSuccessful:false,
             data:error.message,
@@ -20,4 +22,4 @@ const softDeleteSimpleTemplateController = async (request:any, reply:any, done:a
     }
 }
 
-export {softDeleteSimpleTemplateController}
+export {deleteSimpleTemplateController}

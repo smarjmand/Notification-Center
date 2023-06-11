@@ -2,9 +2,10 @@ import mongoose from "mongoose";
 import {IResultOperation} from "../../models/Interfaces/IResultOperations";
 import {values} from "lodash";
 import SimpleTemplate from "../../models/databaseModels/SimpleTemplate";
+import {logger} from "../../utils/global/logger";
 
 
-const getAllItemsSimpleTemplateController = async (request:any, reply:any, done:any) => {
+const getSimpleTemplatesController = async (request:any, reply:any, done:any) => {
     try{
         const items = await SimpleTemplate.find({}).where('isDeleted').equals(false).populate('type')
         if (items.length !== 0){
@@ -14,15 +15,15 @@ const getAllItemsSimpleTemplateController = async (request:any, reply:any, done:
                 message:'These are all items from collection'
             } as IResultOperation)
         } else {
-            reply.code(200).send({
-                isSuccessful:true,
+            reply.code(404).send({
+                isSuccessful:false,
                 data:null,
                 message:'There are no items in database'
             } as IResultOperation)
         }
 
     } catch (error:any) {
-        console.log(error)
+        logger("getSimpleTemplatesController",500,`there is an error : ${error.message}`,8);
         reply.code(500).send({
             isSuccessful:false,
             data:'something went wrong !!',
@@ -31,4 +32,4 @@ const getAllItemsSimpleTemplateController = async (request:any, reply:any, done:
     }
 }
 
-export {getAllItemsSimpleTemplateController}
+export {getSimpleTemplatesController}

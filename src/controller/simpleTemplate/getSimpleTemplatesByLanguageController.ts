@@ -4,8 +4,8 @@ import {values} from "lodash";
 import SimpleTemplate from "../../models/databaseModels/SimpleTemplate";
 import {ILanguage, languageSchema} from "../../models/Interfaces/iLanguage";
 import {object} from "yup";
-
-const getByLanguageSimpleTemplateController = async (request:any, reply:any, done:any) => {
+import {logger} from "../../utils/global/logger";
+const getSimpleTemplatesByLanguageController = async (request:any, reply:any, done:any) => {
     const {language} = request.headers
     if ( language in languageSchema) {
         const items = await SimpleTemplate.find({}, `value.${language}`).where('isDeleted').equals(false)
@@ -40,4 +40,4 @@ const getByLanguageSimpleTemplateController = async (request:any, reply:any, don
        }as IResultOperation)
     }
 }
-export {getByLanguageSimpleTemplateController}
+export {getSimpleTemplatesByLanguageController}
